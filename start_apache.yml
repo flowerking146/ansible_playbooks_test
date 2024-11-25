@@ -15,6 +15,6 @@
         state: started
       when: apache_service_status.state != 'running'
 
-    - name: Print Apache service statu
+    - name: Print Apache service status
       debug:
         msg: "Apache service is {{ apache_service_status.state }}"
