@@ -1,0 +1,9 @@
+---
+- name: Ensure Windows Update service is running
+  hosts: windows
+  gather_facts: yes
+  tasks:
+    - name: Start Windows Update service
+      win_service:
+        name: wuauserv
+        state: started

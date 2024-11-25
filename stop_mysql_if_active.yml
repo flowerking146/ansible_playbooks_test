@@ -1,0 +1,20 @@
+---
+- name: Stop MySQL Server if it is active
+  hosts: mysql_servers
+  become: yes
+  tasks:
+    - name: Check if MySQL is running
+      service:
+        name: mysql
+        state: started
+      register: mysql_service_status
+
+    - name: Stop MySQL if it is running
+      service:
+        name: mysql
+        state: stopped
+      when: mysql_service_status.state == "started"
+
+    - name: Print MySQL service status
+      debug:
+        msg: "MySQL service is now {{ mysql_service_status.state }}"

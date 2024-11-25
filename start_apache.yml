@@ -1,0 +1,20 @@
+---
+- name: Check and Restart Apache Server
+  hosts: mysql_servers  # Replace with the actual group or host where Apache is installed
+  become: yes
+  tasks:
+    - name: Check if Apache is running
+      service:
+        name: apache2  # Use "httpd" if on RHEL/CentOS
+        state: started
+      register: apache_service_status
+
+    - name: Start Apache if it is not running
+      service:
+        name: apache2  # Use "httpd" if on RHEL/CentOS
+        state: started
+      when: apache_service_status.state != 'running'
+
+    - name: Print Apache service status
+      debug:
+        msg: "Apache service is {{ apache_service_status.state }}"

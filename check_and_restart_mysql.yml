@@ -1,0 +1,22 @@
+---
+- name: Check and Restart MySQL Server
+  hosts: mysql_servers
+  become: yes
+#  become_user: root
+#  become_method: sudo
+  tasks:
+    - name: Check if MySQL is running
+      service:
+        name: mysql
+        state: started
+      register: mysql_service_status
+
+    - name: Start MySQL if it is not running
+      service:
+        name: mysql
+        state: started
+      when: mysql_service_status.state != 'running'
+
+    - name: Print MySQL service status
+      debug:
+        msg: "MySQL service is {{ mysql_service_status.state }}"
