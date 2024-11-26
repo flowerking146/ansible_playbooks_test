@@ -3,7 +3,7 @@
   hosts: mysql_servers  # Replace with the actual group or host where Apache is installed
   become: yes
   tasks:
-    - name: Check if Apache is running
+    - name: Check if Apache is run
       service:
         name: apache2  # Use "httpd" if on RHEL/CentOS
         state: started
